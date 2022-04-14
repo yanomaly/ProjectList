@@ -5,12 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/add")
-public class AddPageController {
+@RequestMapping("/view")
+public class DetailViewPageController {
 
     @GetMapping
     public String mainPage(Model model){
-        return "add_page";
+        return "detal_view_page";
     }
 
 }
