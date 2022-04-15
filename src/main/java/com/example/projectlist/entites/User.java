@@ -8,21 +8,25 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "projects")
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
-    @Column(name = "project_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id;
 
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "is_delete")
+    private boolean is_delete;
 
     public Long getUser_id() {
         return user_id;
     }
-    public void setUser_d(Long user_id) {
+    public void setUser_id(long user_id) {
         this.user_id = user_id;
     }
 
@@ -38,6 +42,13 @@ public class User implements UserDetails {
     }
     public void setPassword(String hash_password) {
         this.password = hash_password;
+    }
+
+    public boolean isIs_delete() {
+        return is_delete;
+    }
+    public void setIs_delete(boolean is_delete) {
+        this.is_delete = is_delete;
     }
 
     @Override

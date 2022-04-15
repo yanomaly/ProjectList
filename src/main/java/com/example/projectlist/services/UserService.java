@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Pattern;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -23,5 +25,20 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    //save + delete
+    public boolean saveUser(User user){
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        if(userFromDB != null) return false;
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
+    }
+
+    public String validation(User user) {
+        String decision = "";
+        if (!Pattern.compile(".{6,}").matcher(user.getPassword()).find())
+            decision += "Weak password!\nIt's length should be at least 6 symbols.\n\n";
+        if (userRepository.findByUsername(user.getUsername()) != null)
+            decision += "User with this name already exists!\n\n";
+        return decision;
+    }
 }
