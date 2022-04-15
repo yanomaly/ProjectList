@@ -1,7 +1,6 @@
 package com.example.projectlist.entites;
 
 import javax.persistence.*;
-import java.util.Calendar;
 
 @Entity
 @Table(name = "projects")
@@ -9,7 +8,7 @@ public class Project {
 
     @Id
     @Column(name = "project_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long project_id;
 
     @Column(name = "name")
@@ -17,11 +16,11 @@ public class Project {
     @Column(name = "head")
     private String head;
     @Column(name = "date_finish")
-    private Calendar date_finish;
+    private String date_finish;
     @Column(name = "budget")
-    private int budget;
-    @Column(name = "problem_id")
-    private long problem_id;
+    private String budget;
+    @Column(name = "user_id")
+    private long user_id;
     @Column(name = "is_delete")
     private boolean is_delete;
 
@@ -46,25 +45,25 @@ public class Project {
         this.head = head;
     }
 
-    public Calendar getDate_finish() {
+    public String getDate_finish() {
         return date_finish;
     }
-    public void setDate_finish(Calendar date_finish) {
+    public void setDate_finish(String date_finish) {
         this.date_finish = date_finish;
     }
 
-    public int getBudget() {
+    public String getBudget() {
         return budget;
     }
-    public void setBudget(int budget) {
+    public void setBudget(String budget) {
         this.budget = budget;
     }
 
-    public long getProblem_id() {
-        return problem_id;
+    public long getUser_id() {
+        return user_id;
     }
-    public void setProblem_id(long problem_id) {
-        this.problem_id = problem_id;
+    public void setUser_id(long problem_id) {
+        this.user_id = problem_id;
     }
 
     public boolean isIs_delete() {

@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
-public class HomePageController {
+@RequestMapping("/problems")
+public class AddProblemsPageController {
 
     @GetMapping
-    public String homePage(Model model){
-        return "home_page";
+    public String addProblemsPage(Model model){
+        return "add_problems_page";
     }
 
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class EditPageController {
 
     @GetMapping
-    public String mainPage(Model model){
+    public String editPage(Model model){
         return "edit_page";
     }
 

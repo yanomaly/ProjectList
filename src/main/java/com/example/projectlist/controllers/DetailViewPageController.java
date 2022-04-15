@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class DetailViewPageController {
 
     @GetMapping
-    public String mainPage(Model model){
+    public String detailViewPage(Model model){
         return "detail_view_page";
     }
 

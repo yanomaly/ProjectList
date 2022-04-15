@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add</title>
 </head>
 <body>
-
+<form th:action="@{/add}" th:object = "${projectForm}" method="post">
+    <label> Input name of project:</label>
+    <input type="text" name="name" maxlength="50"/>
+    <label> Input surname of head :</label>
+    <input type="text" name="head" maxlength="30"/>
+    <label> Input date of finish :</label>
+    <input type="text" name="date_finish" maxlength="30"/>
+    <label> Input budget :</label>
+    <input type="text" name="budget" maxlength="10"/>
+    <input type="submit" value="Add" />
+</form>
+<div class="error">
+    <p th:text="${decision}"/>
+</div>
 </body>
 </html>

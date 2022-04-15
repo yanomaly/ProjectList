@@ -8,7 +8,7 @@ public class Problem {
 
     @Id
     @Column(name = "problem_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long problem_id;
 
     @Column(name = "name")
@@ -17,6 +17,8 @@ public class Problem {
     private String description;
     @Column(name = "is_delete")
     private boolean is_delete;
+    @Column(name = "project_id")
+    private boolean project_id;
 
     public long getProblem_id() {
         return problem_id;
@@ -44,5 +46,12 @@ public class Problem {
     }
     public void setIs_delete(boolean is_delete) {
         this.is_delete = is_delete;
+    }
+
+    public boolean isProject_id() {
+        return project_id;
+    }
+    public void setProject_id(boolean project_id) {
+        this.project_id = project_id;
     }
 }
