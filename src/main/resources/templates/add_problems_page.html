@@ -5,6 +5,20 @@
     <title>Add problems</title>
 </head>
 <body>
-
+<form th:action="@{/problems}" th:object = "${problemForm}" method="post">
+    <label> Input name of problem:</label>
+    <input type="text" name="name" maxlength="50"/>
+    <label> Input description :</label>
+    <textarea name="description", maxlength="500"/></textarea>
+    <input type="submit" value="Add" />
+</form>
+<div>
+    <p>Problems in project: <p/>
+    <p th:text="${count}"/>
+    <p th:text="${decision}"/>
+</div>
+<form th:action="@{/problems}" th:object = "${exit}" method="post">
+    <input type="submit" value="Go to home page" />
+</form>
 </body>
 </html>

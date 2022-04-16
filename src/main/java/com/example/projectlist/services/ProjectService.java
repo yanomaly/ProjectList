@@ -2,9 +2,14 @@ package com.example.projectlist.services;
 
 import com.example.projectlist.entites.Project;
 import com.example.projectlist.repositories.ProjectsRepository;
+import com.example.projectlist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
@@ -12,6 +17,11 @@ public class ProjectService {
 
     @Autowired
     ProjectsRepository projectsRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    private Map<Long, Long> user_project = new HashMap<>();
 
     public String validation(Project project){
         String decision = "";
@@ -26,7 +36,18 @@ public class ProjectService {
         return  decision;
     }
 
-    public boolean saveProject(Project project){
-        return projectsRepository.save(project) != null;
+    public void saveProject(Project project){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        long project_id = projectsRepository.save(project).getProject_id();
+        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUser_id();
+        user_project.put(user_id, project_id);
+    }
+
+    public void deleteFromUser_project(long user_id){
+        user_project.remove(user_id);
+    }
+
+    public long getProject_id(long user_id){
+        return user_project.get(user_id);
     }
 }

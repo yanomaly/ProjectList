@@ -18,7 +18,7 @@ public class Problem {
     @Column(name = "is_delete")
     private boolean is_delete;
     @Column(name = "project_id")
-    private boolean project_id;
+    private long project_id;
 
     public long getProblem_id() {
         return problem_id;
@@ -48,10 +48,10 @@ public class Problem {
         this.is_delete = is_delete;
     }
 
-    public boolean isProject_id() {
+    public long isProject_id() {
         return project_id;
     }
-    public void setProject_id(boolean project_id) {
+    public void setProject_id(long project_id) {
         this.project_id = project_id;
     }
 }
