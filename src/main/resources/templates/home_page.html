@@ -9,5 +9,23 @@
     <input type="submit" value="Logout"/>
 </form>
 <a href = "/add"/>Add</a>
+<form th:action="@{/home/filter}" th:object = "${projectForm}" method="post">
+    <label> Search by name of project:</label>
+    <input type="text" name="name" maxlength="50"/>
+    <label> Search by  surname of head :</label>
+    <input type="text" name="head" maxlength="30"/>
+    <label> Search by  date of finish :</label>
+    <input type="text" name="date_finish" maxlength="30"/>
+    <label> Search by  budget :</label>
+    <input type="text" name="budget" maxlength="10"/>
+    <input type="submit" value="Search" />
+</form>
+
+<table th:each="project : ${projects}">
+    <tr><td class = "photo">  <image th:src="@{${add.getPhoto_path()}}"  style="height: 100%; width: 100%"></image> </td></tr>
+    <tr><td class = "descr" th:text="${add.getDescription()}"></td></tr>
+    <tr><td class = price th:text="${add.getPrice()} + ' BYN'"></td></tr>
+    <tr><td class = "phone" th:text="${add.getPhone()}"></td></tr>
+</table>
 </body>
 </html>

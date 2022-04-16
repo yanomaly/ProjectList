@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,7 @@ public class ProjectService {
     @Autowired
     UserRepository userRepository;
 
-    private Map<Long, Long> user_project = new HashMap<>();
+    private Map<Long, Long> user_project = new HashMap<>();  //user_id + current project_id
 
     public String validation(Project project){
         String decision = "";
@@ -48,6 +50,25 @@ public class ProjectService {
     }
 
     public long getProject_id(long user_id){
-        return user_project.get(user_id);
+        if(user_project.containsKey(user_id))
+            return user_project.get(user_id);
+        else
+            return -1;
+    }
+
+    public List<Project> filter(long user_id, Project project){
+        List<Project> temp = projectsRepository.findByUser_id(user_id);
+        if(project.getName() != null && temp != null)
+            temp = temp.stream().filter(x -> x.getName().equals(project.getName())).toList();
+        if(project.getHead() != null && temp != null)
+            temp = temp.stream().filter(x -> x.getHead().equals(project.getHead())).toList();
+        if(project.getBudget() != null && temp != null)
+            temp = temp.stream().filter(x -> x.getBudget().equals(project.getBudget())).toList();
+        if(project.getDate_finish() != null && temp != null)
+            temp = temp.stream().filter(x -> x.getDate_finish().equals(project.getDate_finish())).toList();
+        if(temp == null)
+        return new LinkedList<>();
+        else
+            return temp;
     }
 }

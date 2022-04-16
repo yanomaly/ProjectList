@@ -25,7 +25,7 @@ public class ProblemService {
     @Autowired
     ProjectService projectService;
 
-    private Map<Long, Long> project_problem = new HashMap<>();
+    private Map<Long, Long> project_problem = new HashMap<>(); //id_project + count of problems
 
     public String validation(Problem problem){
         String decision = "";
@@ -40,7 +40,7 @@ public class ProblemService {
         problem.setProject_id(project_id);
         problemsRepository.save(problem);
         if(project_problem.containsKey(project_id))
-            project_problem.put(project_id, project_problem.get(project_id) + 1L);
+            project_problem.put(project_id, project_problem.get(project_id) + 1L); //increase count
         else
             project_problem.put(project_id, 1L);
     }
