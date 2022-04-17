@@ -2,7 +2,6 @@ package com.example.projectlist.services;
 
 import com.example.projectlist.entites.Problem;
 import com.example.projectlist.repositories.ProblemsRepository;
-import com.example.projectlist.repositories.ProjectsRepository;
 import com.example.projectlist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,8 +35,8 @@ public class ProblemService {
 
     public void saveProblem(Problem problem){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long project_id = projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUser_id());
-        problem.setProject_id(project_id);
+        long project_id = projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUserID());
+        problem.setProjectID(project_id);
         problemsRepository.save(problem);
         if(project_problem.containsKey(project_id))
             project_problem.put(project_id, project_problem.get(project_id) + 1L); //increase count

@@ -9,26 +9,26 @@ public class Project {
     @Id
     @Column(name = "project_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long project_id;
+    private Long projectID;
 
     @Column(name = "name")
     private String name;
     @Column(name = "head")
     private String head;
     @Column(name = "date_finish")
-    private String date_finish;
+    private String dateFinish;
     @Column(name = "budget")
     private String budget;
     @Column(name = "user_id")
-    private long user_id;
+    private Long userID;
     @Column(name = "is_delete")
-    private boolean is_delete;
+    private boolean isDelete;
 
-    public long getProject_id() {
-        return project_id;
+    public Long getProjectID() {
+        return projectID;
     }
-    public void setProject_id(long project_id) {
-        this.project_id = project_id;
+    public void setProjectID(Long project_id) {
+        this.projectID = project_id;
     }
 
     public String getName() {
@@ -45,11 +45,11 @@ public class Project {
         this.head = head;
     }
 
-    public String getDate_finish() {
-        return date_finish;
+    public String getDateFinish() {
+        return dateFinish;
     }
-    public void setDate_finish(String date_finish) {
-        this.date_finish = date_finish;
+    public void setDateFinish(String date_finish) {
+        this.dateFinish = date_finish;
     }
 
     public String getBudget() {
@@ -59,17 +59,17 @@ public class Project {
         this.budget = budget;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public Long getUserID() {
+        return userID;
     }
-    public void setUser_id(long problem_id) {
-        this.user_id = problem_id;
+    public void setUserID(Long user_id) {
+        this.userID = user_id;
     }
 
-    public boolean isIs_delete() {
-        return is_delete;
+    public boolean getIsDelete() {
+        return isDelete;
     }
-    public void setIs_delete(boolean is_delete) {
-        this.is_delete = is_delete;
+    public void setIsDelete(boolean is_delete) {
+        this.isDelete = is_delete;
     }
 }

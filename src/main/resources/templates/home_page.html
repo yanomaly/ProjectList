@@ -22,10 +22,29 @@
 </form>
 
 <table th:each="project : ${projects}">
-    <tr><td class = "photo">  <image th:src="@{${add.getPhoto_path()}}"  style="height: 100%; width: 100%"></image> </td></tr>
-    <tr><td class = "descr" th:text="${add.getDescription()}"></td></tr>
-    <tr><td class = price th:text="${add.getPrice()} + ' BYN'"></td></tr>
-    <tr><td class = "phone" th:text="${add.getPhone()}"></td></tr>
+    <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
+    <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
+    <tr><td th:text="'Date finish: ' + ${project.getDateFinish()}"></td></tr>
+    <tr><td  style="border: 0"><form th:action="@{/home/view}" method="post">
+        <input type="number" name="id" th:value="${project.getProjectID()}" style="display: none" >
+        <input type="submit" value="View"/>
+    </form>
+    <form th:action="@{/home/edit}" method="post">
+        <input type="number" name="id" th:value="${project.getProjectID()}" style="display: none" >
+        <input type="submit" value="Edit"/>
+    </form>
+    <form th:action="@{/home/delete}" method="post">
+        <input type="number" name="id" th:value="${project.getProjectID()}" style="display: none" >
+        <input type="submit" value="Delete"/>
+    </form></td></tr>
 </table>
+    <form th:action="@{/home/next}" method="post">
+        <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+        <input type="submit" value="Next page"/>
+    </form>
+    <form th:action="@{/home/prev}" method="post">
+        <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+        <input type="submit" value="Previous page"/>
+    </form>
 </body>
 </html>

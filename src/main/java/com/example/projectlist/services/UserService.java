@@ -58,20 +58,31 @@ public class UserService implements UserDetailsService {
     }
 
     public List<Project> getData(long user_id){
-//        List<Project> temp = user_activedata.get(user_id);
-//        if(temp == null){
-//            return new LinkedList<>();
-//        }
-//        else{
-//            Integer page = user_page.get(user_id);
-//            if(page == null) {
-//                page = 0;
-//                user_page.put(user_id, page);
-//            }
-//            else{
-//
-//            }
-//        }
-        return null;
+        List<Project> temp = user_activedata.get(user_id);
+        if(temp != null && temp.size() != 0){
+            temp = temp.stream().filter(x -> x.getIsDelete() == false).toList();
+            Integer page = user_page.get(user_id);
+            if(page < temp.size()){
+                if(page + 2 <= temp.size()) {
+                    user_page.put(user_id, page + 2);
+                    temp = temp.subList(page, page + 2);
+                }
+                else {
+                    user_page.put(user_id, 0);
+                    temp = temp.subList(page, temp.size());
+                }
+            }
+            if(page == temp.size()){
+                user_page.put(user_id, 0);
+                temp = temp.subList(page - 1, temp.size());
+            }
+        }
+        return temp;
+    }
+
+    public int getPage(long user_id){
+        if(user_page.containsKey(user_id))
+        return user_page.get(user_id);
+        else return 0;
     }
 }

@@ -9,22 +9,22 @@ public class Problem {
     @Id
     @Column(name = "problem_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long problem_id;
+    private Long problemID;
 
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
     @Column(name = "is_delete")
-    private boolean is_delete;
+    private boolean isDelete;
     @Column(name = "project_id")
-    private long project_id;
+    private Long projectID;
 
-    public long getProblem_id() {
-        return problem_id;
+    public Long getProblemID() {
+        return problemID;
     }
-    public void setProblem_id(long problem_id) {
-        this.problem_id = problem_id;
+    public void setProblemID(Long problem_id) {
+        this.problemID = problem_id;
     }
 
     public String getName() {
@@ -41,17 +41,17 @@ public class Problem {
         this.description = description;
     }
 
-    public boolean isIs_delete() {
-        return is_delete;
+    public boolean getIsDelete() {
+        return isDelete;
     }
-    public void setIs_delete(boolean is_delete) {
-        this.is_delete = is_delete;
+    public void setIsDelete(boolean is_delete) {
+        this.isDelete = is_delete;
     }
 
-    public long isProject_id() {
-        return project_id;
+    public Long getProjectID() {
+        return projectID;
     }
-    public void setProject_id(long project_id) {
-        this.project_id = project_id;
+    public void setProjectID(Long project_id) {
+        this.projectID = project_id;
     }
 }

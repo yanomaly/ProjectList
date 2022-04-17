@@ -14,20 +14,20 @@ public class User implements UserDetails {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long user_id;
+    private Long userID;
 
     @Column(name = "username")
     private String username;
     @Column(name = "password")
     private String password;
     @Column(name = "is_delete")
-    private boolean is_delete;
+    private boolean isDelete;
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserID() {
+        return userID;
     }
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserID(Long user_id) {
+        this.userID = user_id;
     }
 
     public String getUsername() {
@@ -44,11 +44,11 @@ public class User implements UserDetails {
         this.password = hash_password;
     }
 
-    public boolean isIs_delete() {
-        return is_delete;
+    public boolean getIsDelete() {
+        return isDelete;
     }
-    public void setIs_delete(boolean is_delete) {
-        this.is_delete = is_delete;
+    public void setIsDelete(boolean is_delete) {
+        this.isDelete = is_delete;
     }
 
     @Override

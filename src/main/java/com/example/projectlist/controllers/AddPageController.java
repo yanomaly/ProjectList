@@ -36,7 +36,7 @@ public class AddPageController {
         String decision = projectService.validation(projectForm);
         if(decision.equals("")){
             Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-            projectForm.setUser_id(userRepository.findByUsername(loggedInUser.getName()).getUser_id());
+            projectForm.setUserID(userRepository.findByUsername(loggedInUser.getName()).getUserID());
             projectService.saveProject(projectForm);
             return "redirect:/problems";
         }
