@@ -25,24 +25,24 @@
     <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
     <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
     <tr><td th:text="'Date finish: ' + ${project.getDateFinish()}"></td></tr>
-    <tr><td  style="border: 0"><form th:action="@{/home/view}" method="post">
+    <tr><td  style="border: 0"><form th:action="@{/home/view}" method="get">
         <input type="number" name="id" th:value="${project.getProjectID()}" style="display: none" >
         <input type="submit" value="View"/>
     </form>
-    <form th:action="@{/home/edit}" method="post">
+    <form th:action="@{/home/edit}" method="get">
         <input type="number" name="id" th:value="${project.getProjectID()}" style="display: none" >
         <input type="submit" value="Edit"/>
     </form>
-    <form th:action="@{/home/delete}" method="post">
+    <form th:action="@{/home/delete}" method="get">
         <input type="number" name="id" th:value="${project.getProjectID()}" style="display: none" >
         <input type="submit" value="Delete"/>
     </form></td></tr>
 </table>
-    <form th:action="@{/home/next}" method="post">
+    <form th:action="@{/home/next}" method="get">
         <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
         <input type="submit" value="Next page"/>
     </form>
-    <form th:action="@{/home/prev}" method="post">
+    <form th:action="@{/home/prev}" method="get">
         <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
         <input type="submit" value="Previous page"/>
     </form>

@@ -72,7 +72,7 @@ public class UserService implements UserDetailsService {
                     temp = temp.subList(page, temp.size());
                 }
             }
-            if(page == temp.size()){
+            else if(page == temp.size()){
                 user_page.put(user_id, 0);
                 temp = temp.subList(page - 1, temp.size());
             }

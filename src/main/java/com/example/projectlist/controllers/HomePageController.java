@@ -40,22 +40,29 @@ public class HomePageController {
     public String homePage(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        long project_id = projectService.getProject_id(user_id);
-        if(project_id >= 0) {                                                            //delete from user_project & project_problem
-            projectService.deleteFromUser_project(user_id);
-            problemService.deleteProject(project_id);
-        }
-        userService.setPage(user_id, 0);
-        if(userService.getData(user_id) == null)
-        userService.setData(user_id, projectsRepository.findAllByUserID(user_id));
         model.addAttribute("projectForm", new Project());
         model.addAttribute("projects", userService.getData(user_id));
         model.addAttribute("page", new Page());
         return "home_page";
     }
 
+    @RequestMapping("/new")
+    @GetMapping
+    public String homePageNew(Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
+        long project_id = projectService.getProject_id(user_id);
+        if(project_id >= 0) {                                                            //delete from user_project & project_problem
+            projectService.deleteFromUser_project(user_id);
+            problemService.deleteProject(project_id);
+        }
+        userService.setPage(user_id, 0);
+        userService.setData(user_id, projectsRepository.findAllByUserID(user_id));
+        return "redirect:/home";
+    }
+
     @RequestMapping("/filter")
-    @PostMapping
+    @GetMapping
     public String addList(@ModelAttribute("projectForm") Project projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
@@ -72,7 +79,7 @@ public class HomePageController {
     }
 
     @RequestMapping("/view")
-    @PostMapping
+    @GetMapping
     public String detailView(@ModelAttribute("projectForm") Project projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
@@ -90,15 +97,15 @@ public class HomePageController {
     }
 
     @RequestMapping("/order")
-    @PostMapping
+    @GetMapping
     public String sortProjects(@ModelAttribute("projectForm") Project projectForm, Model model){
 
         return "redirect:/home";
     }
 
-    @RequestMapping("/next")
-    @PostMapping
-    public String next(@ModelAttribute("page") Page page, Model model){
+    @RequestMapping("/prev")
+    @GetMapping
+    public String previous(@ModelAttribute("page") Page page, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         int set_page = userService.getPage(user_id) - 2 >= 0 ? userService.getPage(user_id) - 2 : 0;
@@ -106,9 +113,9 @@ public class HomePageController {
         return "redirect:/home";
     }
 
-    @RequestMapping("/prev")
-    @PostMapping
-    public String previous(@ModelAttribute("page") Page page, Model model){
+    @RequestMapping("/next")
+    @GetMapping
+    public String next(@ModelAttribute("page") Page page, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         int set_page = userService.getPage(user_id) + 2 <= userService.getData(user_id).size() ? userService.getPage(user_id) + 2 : userService.getData(user_id).size();
