@@ -2,6 +2,7 @@ package com.example.projectlist.controllers;
 
 import com.example.projectlist.auxiliary.Page;
 import com.example.projectlist.entites.Project;
+import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;
 import com.example.projectlist.repositories.UserRepository;
 import com.example.projectlist.services.ProblemService;
@@ -36,11 +37,18 @@ public class HomePageController {
     @Autowired
     ProjectsRepository projectsRepository;
 
+    @Autowired
+    ProblemsRepository problemsRepository;
+
     @GetMapping
     public String homePage(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         model.addAttribute("projectForm", new Project());
+        model.addAttribute("order", new Project());
+        model.addAttribute("view", new Project());
+        model.addAttribute("edit", new Project());
+        model.addAttribute("delete", new Project());
         model.addAttribute("projects", userService.getData(user_id));
         model.addAttribute("page", new Page());
         return "home_page";
@@ -73,14 +81,15 @@ public class HomePageController {
 
     @RequestMapping("/delete")
     @PostMapping
-    public String deleteProject(@ModelAttribute("projectForm") Project projectForm, Model model){
-
-        return "redirect:/home";
+    public String deleteProject(@ModelAttribute("delete") Project projectForm, Model model){
+        projectsRepository.deleteProject(projectForm.getProjectID());
+        problemsRepository.deleteProblem(projectForm.getProjectID());
+        return "redirect:/home/new";
     }
 
     @RequestMapping("/view")
     @GetMapping
-    public String detailView(@ModelAttribute("projectForm") Project projectForm, Model model){
+    public String detailView(@ModelAttribute("view") Project projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         projectService.setActiveProject(user_id, projectForm.getProjectID());
@@ -89,7 +98,7 @@ public class HomePageController {
 
     @RequestMapping("/edit")
     @PostMapping
-    public String editProject(@ModelAttribute("projectForm") Project projectForm, Model model){
+    public String editProject(@ModelAttribute("edit") Project projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         projectService.setActiveProject(user_id, projectForm.getProjectID());
@@ -98,7 +107,7 @@ public class HomePageController {
 
     @RequestMapping("/order")
     @GetMapping
-    public String sortProjects(@ModelAttribute("projectForm") Project projectForm, Model model){
+    public String sortProjects(@ModelAttribute("order") Project projectForm, Model model){
 
         return "redirect:/home";
     }

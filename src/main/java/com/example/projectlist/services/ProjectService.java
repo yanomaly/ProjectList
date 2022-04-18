@@ -1,6 +1,7 @@
 package com.example.projectlist.services;
 
 import com.example.projectlist.entites.Project;
+import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;
 import com.example.projectlist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ProjectService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ProblemsRepository problemsRepository;
 
     private Map<Long, Long> user_project = new HashMap<>();  //user_id + current project_id
 
