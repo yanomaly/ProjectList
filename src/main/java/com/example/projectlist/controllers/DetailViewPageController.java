@@ -3,7 +3,6 @@ package com.example.projectlist.controllers;
 import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;
 import com.example.projectlist.repositories.UserRepository;
-import com.example.projectlist.services.ProblemService;
 import com.example.projectlist.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

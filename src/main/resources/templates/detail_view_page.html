@@ -12,8 +12,10 @@
     <tr><td th:text="'Budget: ' + ${project.getBudget()}"></td></tr>
 </table>
 <table th:each="problem: ${problems}">
+    <tr><td> Problem: </td></tr>
     <tr><td th:text="'Name: ' + ${problem.getName()}"></td></tr>
     <tr><td th:text="'Description: ' + ${problem.getDescription()}"></td></tr>
 </table>
+<a href="/home">Home page</a>
 </body>
 </html>
