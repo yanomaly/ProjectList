@@ -118,7 +118,7 @@ public class HomePageController {
     public String next(@ModelAttribute("page") Page page, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        int set_page = userService.getPage(user_id) + 2 <= userService.getData(user_id).size() ? userService.getPage(user_id) + 2 : userService.getData(user_id).size();
+        int set_page = userService.getPage(user_id) + 2 <= userService.activeDataSize(user_id) ? userService.getPage(user_id) + 2 : userService.activeDataSize(user_id);
         userService.setPage(user_id, set_page);
         return "redirect:/home";
     }
