@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Detail view</title>
 </head>
 <body>
-
+<table th:object="${project}">
+    <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
+    <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
+    <tr><td th:text="'Date finish: ' + ${project.getDateFinish()}"></td></tr>
+    <tr><td th:text="'Budget: ' + ${project.getBudget()}"></td></tr>
+</table>
+<table th:each="problem: ${problems}">
+    <tr><td th:text="'Name: ' + ${problem.getName()}"></td></tr>
+    <tr><td th:text="'Description: ' + ${problem.getDescription()}"></td></tr>
+</table>
 </body>
 </html>
