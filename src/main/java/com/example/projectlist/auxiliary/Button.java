@@ -1,11 +1,7 @@
 package com.example.projectlist.auxiliary;
 
-import javax.persistence.*;
+public class Button {
 
-@Entity
-public class Page {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     public Integer getId() {

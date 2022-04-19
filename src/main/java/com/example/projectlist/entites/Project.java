@@ -1,6 +1,7 @@
 package com.example.projectlist.entites;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "projects")
@@ -16,9 +17,9 @@ public class Project {
     @Column(name = "head")
     private String head;
     @Column(name = "date_finish")
-    private String dateFinish;
+    private Calendar dateFinish;
     @Column(name = "budget")
-    private String budget;
+    private Integer budget;
     @Column(name = "user_id")
     private Long userID;
     @Column(name = "is_delete")
@@ -45,17 +46,17 @@ public class Project {
         this.head = head;
     }
 
-    public String getDateFinish() {
+    public Calendar getDateFinish() {
         return dateFinish;
     }
-    public void setDateFinish(String date_finish) {
+    public void setDateFinish(Calendar date_finish) {
         this.dateFinish = date_finish;
     }
 
-    public String getBudget() {
+    public Integer getBudget() {
         return budget;
     }
-    public void setBudget(String budget) {
+    public void setBudget(Integer budget) {
         this.budget = budget;
     }
 

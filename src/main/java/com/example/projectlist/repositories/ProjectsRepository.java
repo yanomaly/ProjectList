@@ -13,6 +13,7 @@ public interface ProjectsRepository extends JpaRepository<Project, Long> {
     Page<Project> findAllByUserIDAndIsDelete(Long user_id, boolean isDelete, Pageable page);
     Project findByProjectIDAndIsDelete(Long projectID, boolean isDelete);
 
+//    Page<Project> findAllByNameAndBudgetAndDateFinishAndHead(String name, String budget, String dateFinish, String head);
 
     @Transactional
     @Modifying

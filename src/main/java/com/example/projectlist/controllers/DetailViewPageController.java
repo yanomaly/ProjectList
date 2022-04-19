@@ -31,8 +31,8 @@ public class DetailViewPageController {
     public String detailViewPage(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        model.addAttribute("project", projectsRepository.findByProjectID(projectService.getProject_id(user_id)));
-        model.addAttribute("problems", problemsRepository.findAllByProjectID(projectService.getProject_id(user_id)));
+        model.addAttribute("project", projectsRepository.findByProjectIDAndIsDelete(projectService.getProject_id(user_id), false));
+        model.addAttribute("problems", problemsRepository.findAllByProjectIDAndIsDelete(projectService.getProject_id(user_id), false));
         return "detail_view_page";
     }
 

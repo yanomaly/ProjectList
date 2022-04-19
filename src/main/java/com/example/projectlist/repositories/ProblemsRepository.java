@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ProblemsRepository extends JpaRepository<Problem, Long> {
-    List<Problem> findAllByProjectIDAAndIsDelete(Long project, boolean isDelete);
+    List<Problem> findAllByProjectIDAndIsDelete(Long project, boolean isDelete);
 
     @Transactional
     @Modifying

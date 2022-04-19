@@ -1,7 +1,7 @@
 package com.example.projectlist.controllers;
 
-import com.example.projectlist.auxiliary.Page;
-import com.example.projectlist.auxiliary.SortType;
+import com.example.projectlist.auxiliary.Button;
+import com.example.projectlist.auxiliary.DemoProject;
 import com.example.projectlist.entites.Project;
 import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;
@@ -45,14 +45,14 @@ public class HomePageController {
     public String homePage(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        model.addAttribute("projectForm", new Project());
+        model.addAttribute("projectForm", new DemoProject());
         model.addAttribute("order", new Project());
         model.addAttribute("view", new Project());
         model.addAttribute("edit", new Project());
         model.addAttribute("delete", new Project());
         model.addAttribute("projects", projectService.getData(user_id));
-        model.addAttribute("page", new Page());
-        model.addAttribute("sort", new SortType());
+        model.addAttribute("page", new Button());
+        model.addAttribute("sort", new Button());
         return "home_page";
     }
 
@@ -62,18 +62,26 @@ public class HomePageController {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         userService.setPage(user_id, 0);
+        userService.setOrder(user_id, 0);
         userService.setRequest(user_id, null);
         return "redirect:/home";
     }
 
     @RequestMapping("/filter")
     @GetMapping
-    public String addList(@ModelAttribute("projectForm") Project projectForm, Model model){
+    public String addList(@ModelAttribute("projectForm") DemoProject projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        userService.setRequest(user_id, projectForm);
+        String decision = projectService.validation(projectForm);
+        if(decision.equals("")){
+        userService.setRequest(user_id, projectService.createProject(projectForm));
         userService.setPage(user_id, 0);
         return "redirect:/home";
+        }
+        else{
+            model.addAttribute("decision", decision);
+            return "home_page";
+        }
     }
 
     @RequestMapping("/delete")
@@ -104,14 +112,17 @@ public class HomePageController {
 
     @RequestMapping("/order")
     @GetMapping
-    public String sortProjects(@ModelAttribute("sort") SortType sortType, Model model){
-
+    public String sortProjects(@ModelAttribute("sort") Button button, Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
+        userService.setOrder(user_id, button.getId());
+        userService.setPage(user_id, 0);
         return "redirect:/home";
     }
 
     @RequestMapping("/prev")
     @GetMapping
-    public String previous(@ModelAttribute("page") Page page, Model model){
+    public String previous(@ModelAttribute("page") Button page, Model model){
         long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
         int prevPage = userService.getPage(user_id) - 1 >= 0 ? userService.getPage(user_id) - 1 : 0;
         userService.setPage(user_id, prevPage);
@@ -120,7 +131,7 @@ public class HomePageController {
 
     @RequestMapping("/next")
     @GetMapping
-    public String next(@ModelAttribute("page") Page page, Model model){
+    public String next(@ModelAttribute("page") Button page, Model model){
         long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
         int nextPage = userService.getPage(user_id) + 1 <= userService.getMaxPage(user_id) ? userService.getPage(user_id) + 1 : userService.getMaxPage(user_id);
         userService.setPage(user_id, nextPage);

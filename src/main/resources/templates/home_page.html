@@ -20,60 +20,70 @@
     <input type="text" name="budget" maxlength="10"/>
     <input type="submit" value="Search" />
 </form>
-<table></table>
+<div>
+    <p th:text="${decision}"/>
+</div>
+<table>
 <tr><td>
-<form th:action="@{/order}" th:object = "${sort}" method="get">
+<form th:action="@{/home/order}" th:object = "${sort}" method="get">
     <input type="number" name="id" th:value=11 style="display: none" >
-    <input type="submit" value="By Name (N.O.)"/>
+    <input type="submit" value="By Name (dec)"/>
 </form>
 </td><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=12 style="display: none" >
-        <input type="submit" value="By Name (R.O.)"/>
+        <input type="submit" value="By Name (asc)"/>
     </form>
 </td>
 </tr>
 <tr><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=21 style="display: none" >
-        <input type="submit" value="By Head (N.O.)"/>
+        <input type="submit" value="By Head (dec)"/>
     </form>
 </td><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=22 style="display: none" >
-        <input type="submit" value="By Head (R.O.)"/>
+        <input type="submit" value="By Head (asc)"/>
     </form>
 </td>
 </tr>
 <tr><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=31 style="display: none" >
-        <input type="submit" value="By Budget (N.O.)"/>
+        <input type="submit" value="By Budget (dec)"/>
     </form>
 </td><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=32 style="display: none" >
-        <input type="submit" value="By Name (R.O.)"/>
+        <input type="submit" value="By Budget (asc)"/>
     </form>
 </td>
 </tr>
 <tr><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=41 style="display: none" >
-        <input type="submit" value="By Date finish (N.O.)"/>
+        <input type="submit" value="By Date finish (dec)"/>
     </form>
 </td><td>
-    <form th:action="@{/order}" th:object = "${sort}" method="get">
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
         <input type="number" name="id" th:value=42 style="display: none" >
-        <input type="submit" value="By Date finish (R.O.)"/>
+        <input type="submit" value="By Date finish (asc)"/>
     </form>
 </td>
 </tr>
+<tr><td>
+    <form th:action="@{/home/order}" th:object = "${sort}" method="get">
+        <input type="number" name="id" th:value=0 style="display: none" >
+        <input type="submit" value="Default"/>
+    </form>
+</td></tr>
 </table>
+
 <table th:each="project : ${projects}">
     <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
     <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
-    <tr><td th:text="'Date finish: ' + ${project.getDateFinish()}"></td></tr>
+    <tr><td th:text="'Date finish: ' + ${project.getDateFinish().DAY_OF_MONTH} + '-' + ${project.getDateFinish().MONTH + 1} + '-' + ${project.getDateFinish().YEAR}"></td></tr>
     <tr><td  style="border: 0"><form th:action="@{/home/view}" th:object = "${view}" method="get">
         <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
         <input type="submit" value="View"/>
@@ -87,10 +97,12 @@
         <input type="submit" value="Delete"/>
     </form></td></tr>
 </table>
+
     <form th:action="@{/home/next}" method="get">
         <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
         <input type="submit" value="Next page"/>
     </form>
+
     <form th:action="@{/home/prev}" method="get">
         <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
         <input type="submit" value="Previous page"/>

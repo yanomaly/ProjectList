@@ -1,5 +1,6 @@
 package com.example.projectlist.controllers;
 
+import com.example.projectlist.auxiliary.DemoProject;
 import com.example.projectlist.entites.Project;
 import com.example.projectlist.repositories.ProjectsRepository;
 import com.example.projectlist.repositories.UserRepository;
@@ -32,12 +33,13 @@ public class AddPageController {
     }
 
     @PostMapping
-    public String newProject(@ModelAttribute("projectForm") Project projectForm, Model model){
+    public String newProject(@ModelAttribute("projectForm") DemoProject projectForm, Model model){
         String decision = projectService.validation(projectForm);
         if(decision.equals("")){
+            Project project = projectService.createProject(projectForm);
             Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-            projectForm.setUserID(userRepository.findByUsername(loggedInUser.getName()).getUserID());
-            projectService.saveProject(projectForm);
+            project.setUserID(userRepository.findByUsername(loggedInUser.getName()).getUserID());
+            projectService.saveProject(project);
             return "redirect:/problems";
         }
         else{
