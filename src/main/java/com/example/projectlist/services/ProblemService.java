@@ -32,7 +32,6 @@ public class ProblemService {
             decision += "Wrong problem name!\n\n";
         return decision;
     }
-
     public void saveProblem(Problem problem){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long project_id = projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUserID());
@@ -43,15 +42,10 @@ public class ProblemService {
         else
             project_problem.put(project_id, 1L);
     }
-
     public long getCount(long project_id){
         if(project_problem.containsKey(project_id))
            return project_problem.get(project_id);
         else
             return 0l;
-    }
-
-    public void deleteProject(long project_id){
-        project_problem.remove(project_id);
     }
 }

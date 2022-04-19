@@ -1,6 +1,7 @@
 package com.example.projectlist.controllers;
 
 import com.example.projectlist.auxiliary.Page;
+import com.example.projectlist.auxiliary.SortType;
 import com.example.projectlist.entites.Project;
 import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;
@@ -49,8 +50,9 @@ public class HomePageController {
         model.addAttribute("view", new Project());
         model.addAttribute("edit", new Project());
         model.addAttribute("delete", new Project());
-        model.addAttribute("projects", userService.getData(user_id));
+        model.addAttribute("projects", projectService.getData(user_id));
         model.addAttribute("page", new Page());
+        model.addAttribute("sort", new SortType());
         return "home_page";
     }
 
@@ -59,13 +61,8 @@ public class HomePageController {
     public String homePageNew(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        long project_id = projectService.getProject_id(user_id);
-        if(project_id >= 0) {                                                            //delete from user_project & project_problem
-            projectService.deleteFromUser_project(user_id);
-            problemService.deleteProject(project_id);
-        }
         userService.setPage(user_id, 0);
-        userService.setData(user_id, projectsRepository.findAllByUserID(user_id));
+        userService.setRequest(user_id, null);
         return "redirect:/home";
     }
 
@@ -74,7 +71,7 @@ public class HomePageController {
     public String addList(@ModelAttribute("projectForm") Project projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        userService.setData(user_id, projectService.filter(user_id, projectForm));
+        userService.setRequest(user_id, projectForm);
         userService.setPage(user_id, 0);
         return "redirect:/home";
     }
@@ -107,7 +104,7 @@ public class HomePageController {
 
     @RequestMapping("/order")
     @GetMapping
-    public String sortProjects(@ModelAttribute("order") Project projectForm, Model model){
+    public String sortProjects(@ModelAttribute("sort") SortType sortType, Model model){
 
         return "redirect:/home";
     }
@@ -115,20 +112,18 @@ public class HomePageController {
     @RequestMapping("/prev")
     @GetMapping
     public String previous(@ModelAttribute("page") Page page, Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        int set_page = userService.getPage(user_id) - 2 >= 0 ? userService.getPage(user_id) - 2 : 0;
-        userService.setPage(user_id, set_page);
+        long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
+        int prevPage = userService.getPage(user_id) - 1 >= 0 ? userService.getPage(user_id) - 1 : 0;
+        userService.setPage(user_id, prevPage);
         return "redirect:/home";
     }
 
     @RequestMapping("/next")
     @GetMapping
     public String next(@ModelAttribute("page") Page page, Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        int set_page = userService.getPage(user_id) + 2 <= userService.activeDataSize(user_id) ? userService.getPage(user_id) + 2 : userService.activeDataSize(user_id);
-        userService.setPage(user_id, set_page);
+        long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
+        int nextPage = userService.getPage(user_id) + 1 <= userService.getMaxPage(user_id) ? userService.getPage(user_id) + 1 : userService.getMaxPage(user_id);
+        userService.setPage(user_id, nextPage);
         return "redirect:/home";
     }
 }

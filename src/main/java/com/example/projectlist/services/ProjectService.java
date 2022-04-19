@@ -5,10 +5,12 @@ import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;
 import com.example.projectlist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,9 @@ public class ProjectService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     ProblemsRepository problemsRepository;
@@ -40,40 +45,27 @@ public class ProjectService {
             decision += "Wrong date!\n\n";
         return  decision;
     }
-
     public void saveProject(Project project){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long project_id = projectsRepository.save(project).getProjectID();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         user_project.put(user_id, project_id);
     }
-
-    public void deleteFromUser_project(long user_id){
-        user_project.remove(user_id);
-    }
-
     public long getProject_id(long user_id){
         if(user_project.containsKey(user_id))
             return user_project.get(user_id);
         else
             return -1;
     }
-
     public void setActiveProject(long user_id, long project_id){
         user_project.put(user_id, project_id);
     }
+    public List<Project> getData(long user_id){
+        Project sample = userService.getRequest(user_id);
+        if(sample == null || sample.getName() == null && sample.getBudget() == null && sample.getHead() == null && sample.getDateFinish() == null) {
 
-    public List<Project> filter(Long user_id, Project project){
-        List<Project> temp = projectsRepository.findAllByUserID(user_id);
-        temp = temp.stream().filter(x -> x.getIsDelete() == false).toList();
-        if(project.getName() != null && !project.getName().equals("") && temp != null)
-            temp = temp.stream().filter(x -> x.getName().equals(project.getName())).toList();
-        if(project.getHead() != null && !project.getHead().equals("") && temp != null)
-            temp = temp.stream().filter(x -> x.getHead().equals(project.getHead())).toList();
-        if(project.getBudget() != null && !project.getBudget().equals("") && temp != null)
-            temp = temp.stream().filter(x -> x.getBudget().equals(project.getBudget())).toList();
-        if(project.getDateFinish() != null && !project.getDateFinish().equals("") && temp != null)
-            temp = temp.stream().filter(x -> x.getDateFinish().equals(project.getDateFinish())).toList();
-        return temp;
+//            return projectsRepository.findAllByUserID(user_id)
+        }
+        return null;
     }
 }
