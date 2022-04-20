@@ -47,26 +47,12 @@ public class HomePageController {
     @GetMapping
     public String homePage(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();model.addAttribute("projectForm", new DemoProject());
-        model.addAttribute("order", new Project());
-        model.addAttribute("view", new Project());
-        model.addAttribute("edit", new Project());
-        model.addAttribute("delete", new Project());
-        model.addAttribute("projects", projectService.getData(user_id));
-        model.addAttribute("page", new Button());
-        model.addAttribute("sort", new Button());
-        return "home_page";
-    }
-
-    @RequestMapping("/new")
-    @GetMapping
-    public String homePageNew(Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         userService.setPage(user_id, 0);
         userService.setOrder(user_id, 0);
         userService.setRequest(user_id, null);
-        return "redirect:/home";
+        setForms(model);
+        return "home_page";
     }
 
     @RequestMapping("/filter")
@@ -74,16 +60,10 @@ public class HomePageController {
     public String addList(@ModelAttribute("projectForm") DemoProject projectForm, Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        String decision = projectService.validation(projectForm);
-        if(decision.equals("")){
         userService.setRequest(user_id, projectService.createProject(projectForm));
         userService.setPage(user_id, 0);
-        return "redirect:/home";
-        }
-        else{
-            model.addAttribute("decision", decision);
-            return "home_page";
-        }
+        setForms(model);
+        return "home_page";
     }
 
     @RequestMapping("/delete")
@@ -119,7 +99,8 @@ public class HomePageController {
         long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
         userService.setOrder(user_id, button.getId());
         userService.setPage(user_id, 0);
-        return "redirect:/home";
+        setForms(model);
+        return "home_page";
     }
 
     @RequestMapping("/prev")
@@ -128,7 +109,8 @@ public class HomePageController {
         long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
         int prevPage = userService.getPage(user_id) - 1 >= 0 ? userService.getPage(user_id) - 1 : 0;
         userService.setPage(user_id, prevPage);
-        return "redirect:/home";
+        setForms(model);
+        return "home_page";
     }
 
     @RequestMapping("/next")
@@ -137,6 +119,20 @@ public class HomePageController {
         long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
         int nextPage = userService.getPage(user_id) + 1 <= userService.getMaxPage(user_id) ? userService.getPage(user_id) + 1 : userService.getMaxPage(user_id);
         userService.setPage(user_id, nextPage);
-        return "redirect:/home";
+        setForms(model);
+        return "home_page";
+    }
+
+    public Model setForms(Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();model.addAttribute("projectForm", new DemoProject());
+        model.addAttribute("order", new Project());
+        model.addAttribute("view", new Project());
+        model.addAttribute("edit", new Project());
+        model.addAttribute("delete", new Project());
+        model.addAttribute("projects", projectService.getData(user_id));
+        model.addAttribute("page", new Button());
+        model.addAttribute("sort", new Button());
+        return model;
     }
 }
