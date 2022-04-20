@@ -8,7 +8,7 @@
 <table th:object="${project}">
     <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
     <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
-    <tr><td th:text="'Date finish: ' + ${project.getDateFinish()}"></td></tr>
+    <tr><td th:text="'Date finish: ' + ${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"></td></tr>
     <tr><td th:text="'Budget: ' + ${project.getBudget()}"></td></tr>
 </table>
 <table th:each="problem: ${problems}">

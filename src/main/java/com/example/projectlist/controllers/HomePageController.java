@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Calendar;
+import java.util.List;
+
 @Controller
 @RequestMapping("/home")
 public class HomePageController {
@@ -44,8 +47,7 @@ public class HomePageController {
     @GetMapping
     public String homePage(Model model){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        model.addAttribute("projectForm", new DemoProject());
+        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();model.addAttribute("projectForm", new DemoProject());
         model.addAttribute("order", new Project());
         model.addAttribute("view", new Project());
         model.addAttribute("edit", new Project());

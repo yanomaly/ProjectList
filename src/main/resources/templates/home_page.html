@@ -83,7 +83,7 @@
 <table th:each="project : ${projects}">
     <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
     <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
-    <tr><td th:text="'Date finish: ' + ${project.getDateFinish().DAY_OF_MONTH} + '-' + ${project.getDateFinish().MONTH + 1} + '-' + ${project.getDateFinish().YEAR}"></td></tr>
+    <tr><td th:text="'Date finish: ' + ${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"></td></tr>
     <tr><td  style="border: 0"><form th:action="@{/home/view}" th:object = "${view}" method="get">
         <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
         <input type="submit" value="View"/>

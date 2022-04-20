@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit</title>
 </head>
 <body>
+<form th:action="@{/edit/project}" th:object = "${edit}" method="post">
+    <label> Input name of project:</label>
+    <input type="text" name="name" maxlength="50" th:value="${project.getName()}"/>
+    <label> Input surname of head :</label>
+    <input type="text" name="head" maxlength="30" th:value="${project.getHead()}"/>
+    <label> Input date of finish :</label>
+    <input type="text" name="dateFinish" maxlength="30" th:value="${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"/>
+    <label> Input budget :</label>
+    <input type="text" name="budget" maxlength="10" th:value="${project.getBudget()}"/>
+    <input type="submit" value="Edit" />
+</form>
+<form th:action="@{/delete}" th:object = "${delete}" method="get">
+    <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
+    <input type="submit" value="Delete"/>
+</form>
+<p th:text="${decisionProjectEdit}"/>
 
+<table th:each="problem: ${problems}">
+    <tr><td> <form th:action="@{/problem}" th:object = "${editProblem}" method="post">
+        <label> Input name of problem:</label>
+        <input type="text" name="name" maxlength="50" th:value="${problem.getName()}"/>
+        <label> Input description :</label>
+        <textarea name="description", maxlength="500" th:value="${problem.getDescription()}"/></textarea>
+        <input type="submit" value="Edit" />
+    </form>
+        <p th:text="${decisionProblEdit}"/>
+    </td></tr>
+    <tr><td  style="border: 0"><form th:action="@{/delete/problem}" th:object = "${deleteProblem}" method="get">
+        <input type="number" name="projectID" th:value="${problem.getProblemID()}" style="display: none" >
+        <input type="submit" value="Delete"/>
+    </form>
+</table>
+<form th:action="@{/add/problem}" th:object = "${addProblem}" method="post">
+    <label> Input name of problem:</label>
+    <input type="text" name="name" maxlength="50"/>
+    <label> Input description :</label>
+    <textarea name="description", maxlength="500"/></textarea>
+    <input type="submit" value="Add" />
+</form>
+    <p th:text="${decisionProblAdd}"/>
+<a href="/home/new">Home page</a>
 </body>
 </html>
