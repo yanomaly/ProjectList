@@ -16,4 +16,16 @@ public interface ProblemsRepository extends JpaRepository<Problem, Long> {
     @Modifying
     @Query("UPDATE Problem SET isDelete = true WHERE projectID = :ID")
     void deleteProblem(@Param("ID") Long projectID);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Problem SET isDelete = true WHERE problemID = :ID")
+    void deleteProblemByProblemID(@Param("ID") Long problemID);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Problem SET name = :name, description = :description WHERE problemID = :ID")
+    void editProblem(@Param("ID") Long problemID,
+                     @Param("name") String name,
+                     @Param("description") String description);
 }

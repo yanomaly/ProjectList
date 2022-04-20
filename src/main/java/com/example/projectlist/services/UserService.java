@@ -31,14 +31,6 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         return user;
     }
-
-    public boolean saveUser(User user){
-        User userFromDB = userRepository.findByUsername(user.getUsername());
-        if(userFromDB != null) return false;
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return true;
-    }
     public String validation(User user) {
         String decision = "";
         if (!Pattern.compile(".{6,}").matcher(user.getPassword()).find())
@@ -47,19 +39,24 @@ public class UserService implements UserDetailsService {
             decision += "User with this name already exists!\n\n";
         return decision;
     }
+    public Project getRequest(long user_id){
+        return user_request.get(user_id);
+    }
+    public boolean saveUser(User user){
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        if(userFromDB != null) return false;
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return true;
+    }
     public void setPage(long user_id, int page){
         user_page.put(user_id, page);
-    }
-    public int getPage(long user_id){
-        if(user_page.containsKey(user_id))
-        return user_page.get(user_id);
-        else return 0;
     }
     public void setRequest(long user_id, Project project){
         user_request.put(user_id, project);
     }
-    public Project getRequest(long user_id){
-        return user_request.get(user_id);
+    public void setMaxPage(long user_id, int maxPage){
+        user_maxpage.put(user_id, maxPage);
     }
     public void setOrder(long user_id, int order){
         user_order.put(user_id, order);
@@ -67,10 +64,12 @@ public class UserService implements UserDetailsService {
     public int getOrder(long user_id){
         return user_order.get(user_id);
     }
-    public void setMaxPage(long user_id, int maxPage){
-        user_maxpage.put(user_id, maxPage);
-    }
     public int getMaxPage(long user_id){
         return user_maxpage.get(user_id);
+    }
+    public int getPage(long user_id){
+        if(user_page.containsKey(user_id))
+            return user_page.get(user_id);
+        else return 0;
     }
 }

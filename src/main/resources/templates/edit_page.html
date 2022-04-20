@@ -16,28 +16,29 @@
     <input type="text" name="budget" maxlength="10" th:value="${project.getBudget()}"/>
     <input type="submit" value="Edit" />
 </form>
-<form th:action="@{/delete}" th:object = "${delete}" method="get">
+<form th:action="@{/edit/delete}" th:object = "${delete}" method="get">
     <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
     <input type="submit" value="Delete"/>
 </form>
 <p th:text="${decisionProjectEdit}"/>
 
 <table th:each="problem: ${problems}">
-    <tr><td> <form th:action="@{/problem}" th:object = "${editProblem}" method="post">
+    <tr><td> <form th:action="@{/edit/problem}" th:object = "${editProblem}" method="post">
         <label> Input name of problem:</label>
         <input type="text" name="name" maxlength="50" th:value="${problem.getName()}"/>
         <label> Input description :</label>
         <textarea name="description", maxlength="500" th:value="${problem.getDescription()}"/></textarea>
+        <input type="number" name="problemID" th:value="${problem.getProblemID()}" style="display: none" >
         <input type="submit" value="Edit" />
     </form>
         <p th:text="${decisionProblEdit}"/>
     </td></tr>
-    <tr><td  style="border: 0"><form th:action="@{/delete/problem}" th:object = "${deleteProblem}" method="get">
-        <input type="number" name="projectID" th:value="${problem.getProblemID()}" style="display: none" >
+    <tr><td  style="border: 0"><form th:action="@{/edit/delete/problem}" th:object = "${deleteProblem}" method="post">
+        <input type="number" name="problemID" th:value="${problem.getProblemID()}" style="display: none" >
         <input type="submit" value="Delete"/>
     </form>
 </table>
-<form th:action="@{/add/problem}" th:object = "${addProblem}" method="post">
+<form th:action="@{/edit/add/problem}" th:object = "${addProblem}" method="post">
     <label> Input name of problem:</label>
     <input type="text" name="name" maxlength="50"/>
     <label> Input description :</label>
@@ -45,6 +46,6 @@
     <input type="submit" value="Add" />
 </form>
     <p th:text="${decisionProblAdd}"/>
-<a href="/home/new">Home page</a>
+<a href="/home">Home page</a>
 </body>
 </html>
