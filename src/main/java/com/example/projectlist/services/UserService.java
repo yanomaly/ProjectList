@@ -1,16 +1,21 @@
 package com.example.projectlist.services;
 
 import com.example.projectlist.entites.Project;
+import com.example.projectlist.entites.Role;
 import com.example.projectlist.entites.User;
 import com.example.projectlist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -29,7 +34,10 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        return user;
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        for (Role role : user.getRoles())
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
     public String validation(User user) {
         String decision = "";
@@ -42,9 +50,17 @@ public class UserService implements UserDetailsService {
     public Project getRequest(long user_id){
         return user_request.get(user_id);
     }
+    public List<User> getUsers(long user_id){
+        List<User> data = new LinkedList<>();
+        Pageable page = PageRequest.of(getPage(user_id), 2);
+        data = userRepository.findAllByRole(1L,  page).getContent();
+        setMaxPage(user_id, page.getPageSize());
+        return data;
+    }
     public boolean saveUser(User user){
         User userFromDB = userRepository.findByUsername(user.getUsername());
         if(userFromDB != null) return false;
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;

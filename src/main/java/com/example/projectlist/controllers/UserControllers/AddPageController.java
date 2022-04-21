@@ -1,4 +1,4 @@
-package com.example.projectlist.controllers;
+package com.example.projectlist.controllers.UserControllers;
 
 import com.example.projectlist.auxiliary.DemoProject;
 import com.example.projectlist.entites.Project;

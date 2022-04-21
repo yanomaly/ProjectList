@@ -1,4 +1,4 @@
-package com.example.projectlist.controllers;
+package com.example.projectlist.controllers.UserControllers;
 
 import com.example.projectlist.auxiliary.Button;
 import com.example.projectlist.auxiliary.DemoProject;
@@ -46,11 +46,9 @@ public class HomePageController {
 
     @GetMapping
     public String homePage(Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        userService.setPage(user_id, 0);
-        userService.setOrder(user_id, 0);
-        userService.setRequest(user_id, null);
+        userService.setPage(userID(), 0);
+        userService.setOrder(userID(), 0);
+        userService.setRequest(userID(), null);
         setForms(model);
         return "home_page";
     }
@@ -58,10 +56,8 @@ public class HomePageController {
     @RequestMapping("/filter")
     @GetMapping
     public String addList(@ModelAttribute("projectForm") DemoProject projectForm, Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        userService.setRequest(user_id, projectService.createProject(projectForm));
-        userService.setPage(user_id, 0);
+        userService.setRequest(userID(), projectService.createProject(projectForm));
+        userService.setPage(userID(), 0);
         setForms(model);
         return "home_page";
     }
@@ -77,28 +73,22 @@ public class HomePageController {
     @RequestMapping("/view")
     @GetMapping
     public String detailView(@ModelAttribute("view") Project projectForm, Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        projectService.setActiveProject(user_id, projectForm.getProjectID());
+        projectService.setActiveProject(userID(), projectForm.getProjectID());
         return "redirect:/view";
     }
 
     @RequestMapping("/edit")
     @PostMapping
     public String editProject(@ModelAttribute("edit") Project projectForm, Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        projectService.setActiveProject(user_id, projectForm.getProjectID());
+        projectService.setActiveProject(userID(), projectForm.getProjectID());
         return "redirect:/edit";
     }
 
     @RequestMapping("/order")
     @GetMapping
     public String sortProjects(@ModelAttribute("sort") Button button, Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long user_id = userRepository.findByUsername(loggedInUser.getName()).getUserID();
-        userService.setOrder(user_id, button.getId());
-        userService.setPage(user_id, 0);
+        userService.setOrder(userID(), button.getId());
+        userService.setPage(userID(), 0);
         setForms(model);
         return "home_page";
     }
@@ -106,9 +96,8 @@ public class HomePageController {
     @RequestMapping("/prev")
     @GetMapping
     public String previous(@ModelAttribute("page") Button page, Model model){
-        long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
-        int prevPage = userService.getPage(user_id) - 1 >= 0 ? userService.getPage(user_id) - 1 : 0;
-        userService.setPage(user_id, prevPage);
+        int prevPage = userService.getPage(userID()) - 1 >= 0 ? userService.getPage(userID()) - 1 : 0;
+        userService.setPage(userID(), prevPage);
         setForms(model);
         return "home_page";
     }
@@ -116,9 +105,8 @@ public class HomePageController {
     @RequestMapping("/next")
     @GetMapping
     public String next(@ModelAttribute("page") Button page, Model model){
-        long user_id = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserID();
-        int nextPage = userService.getPage(user_id) + 1 <= userService.getMaxPage(user_id) ? userService.getPage(user_id) + 1 : userService.getMaxPage(user_id);
-        userService.setPage(user_id, nextPage);
+        int nextPage = userService.getPage(userID()) + 1 <= userService.getMaxPage(userID()) ? userService.getPage(userID()) + 1 : userService.getMaxPage(userID());
+        userService.setPage(userID(), nextPage);
         setForms(model);
         return "home_page";
     }
@@ -134,5 +122,9 @@ public class HomePageController {
         model.addAttribute("page", new Button());
         model.addAttribute("sort", new Button());
         return model;
+    }
+    public long userID(){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByUsername(loggedInUser.getName()).getUserID();
     }
 }

@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +25,8 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "is_delete")
     private boolean isDelete;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> role;
 
     public Long getUserID() {
         return userID;
@@ -51,6 +56,13 @@ public class User implements UserDetails {
         this.isDelete = is_delete;
     }
 
+    public Set<Role> getRoles() {
+        return role;
+    }
+    public void setRoles(Set<Role> role) {
+        this.role = role;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -75,5 +87,4 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
-
 }

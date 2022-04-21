@@ -1,4 +1,4 @@
-package com.example.projectlist.controllers;
+package com.example.projectlist.controllers.UserControllers;
 
 import com.example.projectlist.repositories.ProblemsRepository;
 import com.example.projectlist.repositories.ProjectsRepository;

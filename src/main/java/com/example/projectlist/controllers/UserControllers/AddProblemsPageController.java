@@ -1,4 +1,4 @@
-package com.example.projectlist.controllers;
+package com.example.projectlist.controllers.UserControllers;
 
 import com.example.projectlist.entites.Problem;
 import com.example.projectlist.repositories.UserRepository;
@@ -27,9 +27,7 @@ public class AddProblemsPageController {
     @GetMapping
     public String addProblemsPage(Model model){
         model.addAttribute("problemForm", new Problem());
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        long project_id = projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUserID()); //count of problems
-        model.addAttribute("count", problemService.getCount(project_id));
+        model.addAttribute("count", problemService.getCount(projectID()));   //count of problems
         return "add_problems_page";
     }
 
@@ -38,16 +36,17 @@ public class AddProblemsPageController {
         String decision = problemService.validation(problemForm);
         if (decision.equals("")) {
             problemService.saveProblem(problemForm);
-            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-            long project_id = projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUserID());
-            model.addAttribute("count", problemService.getCount(project_id));
+            model.addAttribute("count", problemService.getCount(projectID()));
             return "add_problems_page";
         } else {
             model.addAttribute("decision", decision);
-            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-            long project_id = projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUserID()); //update count
-            model.addAttribute("count", problemService.getCount(project_id));
+            model.addAttribute("count", problemService.getCount(projectID())); //update count
             return "add_problems_page";
         }
+    }
+
+    public long projectID(){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        return projectService.getProject_id(userRepository.findByUsername(loggedInUser.getName()).getUserID());
     }
 }
