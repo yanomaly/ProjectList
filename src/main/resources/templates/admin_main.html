@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<table th:each="user : ${users}">
+    <tr><td th:text="'Name: ' + ${user.getUsername()}"></td></tr>
+    <tr><td th:text="'ID: ' + ${user.getUserID()}"></td></tr>
+    <tr><td  style="border: 0"><form th:action="@{/admin/projects/redir}" th:object = "${user}" method="get">
+        <input type="number" name="userID" th:value="${user.getUserID()}" style="display: none" >
+        <input type="submit" value="View projects"/>
+    </form>
+</table>
+<form th:action="@{/admin/next}" method="get">
+    <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+    <input type="submit" value="Next page"/>
+</form>
+
+<form th:action="@{/admin/prev}" method="get">
+    <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+    <input type="submit" value="Previous page"/>
+</form>
+</body>
+</html>

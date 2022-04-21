@@ -30,6 +30,7 @@ public class UserService implements UserDetailsService {
     private HashMap<Long, Project> user_request = new HashMap<>();
     private HashMap<Long, Integer> user_order = new HashMap<>();
     private HashMap<Long, Integer> user_maxpage = new HashMap<>();
+    private HashMap<Long, Long> admin_userID = new HashMap<>();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,7 +54,7 @@ public class UserService implements UserDetailsService {
     public List<User> getUsers(long user_id){
         List<User> data = new LinkedList<>();
         Pageable page = PageRequest.of(getPage(user_id), 2);
-        data = userRepository.findAllByRole(1L,  page).getContent();
+        data = userRepository.findAllByRole(new Role(1L, "ROLE_USER"),  page).getContent();
         setMaxPage(user_id, page.getPageSize());
         return data;
     }
@@ -64,6 +65,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
+    }
+    public void setUserID(long adminID, long user_id){
+        admin_userID.put(adminID, user_id);
     }
     public void setPage(long user_id, int page){
         user_page.put(user_id, page);
@@ -76,6 +80,9 @@ public class UserService implements UserDetailsService {
     }
     public void setOrder(long user_id, int order){
         user_order.put(user_id, order);
+    }
+    public long getUserID(long adminID){
+        return admin_userID.get(adminID);
     }
     public int getOrder(long user_id){
         return user_order.get(user_id);

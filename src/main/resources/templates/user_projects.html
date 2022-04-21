@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+</head>
+<body>
+<table th:each="project : ${projects}">
+    <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
+    <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
+    <tr><td th:text="'Date finish: ' + ${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"></td></tr>
+    <tr><td  style="border: 0"><form th:action="@{/admin/view}" th:object = "${view}" method="get">
+        <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
+        <input type="submit" value="View"/>
+    </form>
+</table>
+<form th:action="@{/admin/next}" method="get">
+    <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+    <input type="submit" value="Next page"/>
+</form>
+
+<form th:action="@{/admin/prev}" method="get">
+    <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+    <input type="submit" value="Previous page"/>
+</form>
+<a href = "/admin">Main page</a>
+</body>
+</html>
