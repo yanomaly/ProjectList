@@ -5,6 +5,9 @@
     <title>Users</title>
 </head>
 <body>
+<form th:action="@{/logout}" href="/" method="post">
+    <input type="submit" value="Logout"/>
+</form>
 <table th:each="user : ${users}">
     <tr><td th:text="'Name: ' + ${user.getUsername()}"></td></tr>
     <tr><td th:text="'ID: ' + ${user.getUserID()}"></td></tr>

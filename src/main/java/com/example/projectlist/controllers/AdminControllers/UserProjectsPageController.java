@@ -40,13 +40,20 @@ public class UserProjectsPageController {
         return "user_projects";
     }
 
+    @RequestMapping("/view/redir")
+    @GetMapping
+    public String redirect(@ModelAttribute("view") Project project, Model model){
+        projectService.setActiveProject(adminID(), project.getProjectID());
+        return "redirect:/admin/view";
+    }
+
     @RequestMapping("/prev")
     @GetMapping
     public String previous(@ModelAttribute("page") Button page, Model model){
         int prevPage = userService.getPage(adminID()) - 1 >= 0 ? userService.getPage(adminID()) - 1 : 0;
         userService.setPage(adminID(), prevPage);
         setForms(model);
-        return "admin_main";
+        return "user_projects";
     }
 
     @RequestMapping("/next")
@@ -55,7 +62,7 @@ public class UserProjectsPageController {
         int nextPage = userService.getPage(adminID()) + 1 <= userService.getMaxPage(adminID()) ? userService.getPage(adminID()) + 1 : userService.getMaxPage(adminID());
         userService.setPage(adminID(), nextPage);
         setForms(model);
-        return "admin_main";
+        return "user_projects";
     }
 
     public void setForms(Model model){

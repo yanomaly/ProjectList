@@ -7,6 +7,7 @@ import com.example.projectlist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,9 +53,8 @@ public class UserService implements UserDetailsService {
         return user_request.get(user_id);
     }
     public List<User> getUsers(long user_id){
-        List<User> data = new LinkedList<>();
-        Pageable page = PageRequest.of(getPage(user_id), 2);
-        data = userRepository.findAllByRole(new Role(1L, "ROLE_USER"),  page).getContent();
+        Pageable page = PageRequest.of(getPage(user_id), 2, Sort.by("userID").descending());
+        List<User> data = userRepository.findAllByRole(new Role(1L, "ROLE_USER"),  page).getContent();
         setMaxPage(user_id, page.getPageSize());
         return data;
     }

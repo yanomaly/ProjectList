@@ -89,7 +89,7 @@ public class ProjectService {
                 userService.setMaxPage(user_id, page.getPageSize());
             }
             if (userService.getOrder(user_id) == 0) {
-                Pageable page = PageRequest.of(userService.getPage(user_id), 2);
+                Pageable page = PageRequest.of(userService.getPage(user_id), 2, Sort.by("projectID").descending());
                 data = projectsRepository.findAllByUserIDAndIsDelete(user_id, false, page).getContent();
                 userService.setMaxPage(user_id, page.getPageSize());
             }

@@ -16,6 +16,6 @@
     <tr><td th:text="'Name: ' + ${problem.getName()}"></td></tr>
     <tr><td th:text="'Description: ' + ${problem.getDescription()}"></td></tr>
 </table>
-<a href="/home">Home page</a>
+<a th:href="${role == 1}? #{'/home'} : #{'/admin'}">Home page</a>
 </body>
 </html>
