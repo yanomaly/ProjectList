@@ -27,11 +27,11 @@ public class UserService implements UserDetailsService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private HashMap<Long, Integer> user_page = new HashMap<>();
-    private HashMap<Long, Project> user_request = new HashMap<>();
-    private HashMap<Long, Integer> user_order = new HashMap<>();
-    private HashMap<Long, Integer> user_maxpage = new HashMap<>();
-    private HashMap<Long, Long> admin_userID = new HashMap<>();
+    private HashMap<Long, Integer> user_page = new HashMap<>(); //user + number of his current page
+    private HashMap<Long, Project> user_request = new HashMap<>(); //user + sample of request to get data from db to show
+    private HashMap<Long, Integer> user_order = new HashMap<>(); //user + type of sort which app should use
+    private HashMap<Long, Integer> user_maxpage = new HashMap<>(); //user + max number of page he can reach
+    private HashMap<Long, Long> admin_userID = new HashMap<>(); //admin + user which he's watching now
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -30,6 +30,7 @@ public class AdminMainPageController {
         return "admin_main";
     }
 
+    //button 'previous' clicked
     @RequestMapping("/prev")
     @GetMapping
     public String previous(@ModelAttribute("page") Button page, Model model){
@@ -39,6 +40,7 @@ public class AdminMainPageController {
         return "admin_main";
     }
 
+    //button 'next' clicked
     @RequestMapping("/next")
     @GetMapping
     public String next(@ModelAttribute("page") Button page, Model model){

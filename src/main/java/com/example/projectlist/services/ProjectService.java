@@ -31,7 +31,7 @@ public class ProjectService {
     @Autowired
     ProblemsRepository problemsRepository;
 
-    private Map<Long, Long> user_project = new HashMap<>();  //user_id + current project_id
+    private Map<Long, Long> user_project = new HashMap<>();  //user + current project (which he's editing now)
 
     public String validation(DemoProject project){
         String decision = "";
@@ -46,6 +46,7 @@ public class ProjectService {
         return  decision;
     }
     public Project createProject(DemoProject demoProject){
+
         Project project = new Project();
         if(demoProject.getName() != null && !demoProject.getName().equals(""))
         project.setName(demoProject.getName());
@@ -58,12 +59,12 @@ public class ProjectService {
             project.setDateFinish(new GregorianCalendar(Integer.parseInt(dateTemp[2]), Integer.parseInt(dateTemp[1]) - 1, Integer.parseInt(dateTemp[0])));
         }
         return project;
-    }
+    } //convert data in string format from DemoProject to operating format in Project
     public List<Project> getData(long user_id){
         List<Project> data = new LinkedList<>();
         Project sample = userService.getRequest(user_id);
         String sortBy = null;
-        switch (userService.getOrder(user_id) / 10){
+        switch (userService.getOrder(user_id) / 10){ //defines the field by which to sort (Order - is two-digit number. First number - is field, second - is order: 1 - decs, 2 - asc)
             case (1):
                 sortBy = "name";
                 break;
@@ -77,8 +78,8 @@ public class ProjectService {
                 sortBy = "dateFinish";
                 break;
         }
-        if(isEmpty(sample)) {
-            if (userService.getOrder(user_id) % 10 == 1) {
+        if(isEmpty(sample)) { //if sample is empty get all projects from db with current user id
+            if (userService.getOrder(user_id) % 10 == 1) { //defines desc or asc order
                 Pageable page = PageRequest.of(userService.getPage(user_id), 2, Sort.by(sortBy).descending());
                 data = projectsRepository.findAllByUserIDAndIsDelete(user_id, false, page).getContent();
                 userService.setMaxPage(user_id, page.getPageSize());
@@ -94,7 +95,7 @@ public class ProjectService {
                 userService.setMaxPage(user_id, page.getPageSize());
             }
         }
-        else{
+        else{ //f sample is not empty prepare fields to insert into query
             String name, head;
             Integer budget1, budget2;
             Calendar dateFinish1, dateFinish2;
@@ -122,7 +123,7 @@ public class ProjectService {
                 dateFinish1 = sample.getDateFinish();
                 dateFinish2 = dateFinish1;
             }
-            Pageable page = PageRequest.of(userService.getPage(user_id), 2);
+            Pageable page = PageRequest.of(userService.getPage(user_id), 2, Sort.by("projectID").descending());
             data = projectsRepository.filter(name, head, budget1, budget2, dateFinish1, dateFinish2, page).getContent();
             userService.setMaxPage(user_id, page.getPageSize());
         }

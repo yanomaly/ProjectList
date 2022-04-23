@@ -12,16 +12,19 @@ import java.util.List;
 public interface ProblemsRepository extends JpaRepository<Problem, Long> {
     List<Problem> findAllByProjectIDAndIsDelete(Long project, boolean isDelete);
 
+    //soft delete problem by project id to organize cascade delete
     @Transactional
     @Modifying
     @Query("UPDATE Problem SET isDelete = true WHERE projectID = :ID")
     void deleteProblem(@Param("ID") Long projectID);
 
+    //soft delete problem
     @Transactional
     @Modifying
     @Query("UPDATE Problem SET isDelete = true WHERE problemID = :ID")
     void deleteProblemByProblemID(@Param("ID") Long problemID);
 
+    //edit problem
     @Transactional
     @Modifying
     @Query("UPDATE Problem SET name = :name, description = :description WHERE problemID = :ID")

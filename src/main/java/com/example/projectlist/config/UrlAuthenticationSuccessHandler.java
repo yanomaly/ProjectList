@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+//redirect after login in depend of logined user
 public class UrlAuthenticationSuccessHandler  implements AuthenticationSuccessHandler {
     protected Log logger = LogFactory.getLog(this.getClass());
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();

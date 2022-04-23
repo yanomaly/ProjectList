@@ -47,6 +47,7 @@ public class UserProjectsPageController {
         return "redirect:/admin/view";
     }
 
+    //button 'previous' clicked
     @RequestMapping("/prev")
     @GetMapping
     public String previous(@ModelAttribute("page") Button page, Model model){
@@ -56,6 +57,7 @@ public class UserProjectsPageController {
         return "user_projects";
     }
 
+    //button 'next' clicked
     @RequestMapping("/next")
     @GetMapping
     public String next(@ModelAttribute("page") Button page, Model model){

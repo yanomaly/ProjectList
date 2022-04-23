@@ -1,3 +1,5 @@
+/* password is 111111 */
+
 insert into users (username, password, is_delete) VALUES
                                                                   ('Admin1', '$2a$10$UmqAj0xbxmKJnzbcBhTygu9ydebkKWX9zQs.wala7zeU2brLMTNDG', false);
 

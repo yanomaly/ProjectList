@@ -1,5 +1,6 @@
 package com.example.projectlist.auxiliary;
 
+//used to process button clicks at html forms
 public class Button {
 
     private Integer id;

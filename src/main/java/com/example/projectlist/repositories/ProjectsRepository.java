@@ -15,6 +15,7 @@ public interface ProjectsRepository extends JpaRepository<Project, Long> {
     Page<Project> findAllByUserIDAndIsDelete(Long user_id, boolean isDelete, Pageable page);
     Project findByProjectIDAndIsDelete(Long projectID, boolean isDelete);
 
+    //filter
     @Query("SELECT p FROM Project p WHERE p.name like :name and p.head like :head and p.budget >= :budget1 and p.budget <= :budget2 and p.dateFinish >= :dateFinish1 and p.dateFinish <= :dateFinish2 and p.isDelete = false")
     Page<Project> filter(@Param("name") String name,
                         @Param("head") String head,
@@ -24,11 +25,13 @@ public interface ProjectsRepository extends JpaRepository<Project, Long> {
                         @Param("dateFinish2") Calendar dateFinish2,
                         Pageable page);
 
+    //soft delete project
     @Transactional
     @Modifying
     @Query("UPDATE Project SET isDelete = true WHERE projectID = :ID")
     void deleteProject(@Param("ID") Long projectID);
 
+    //update project
     @Transactional
     @Modifying
     @Query("UPDATE Project SET name = :name, head = :head, dateFinish = :dateFinish, budget = :budget WHERE projectID = :ID")

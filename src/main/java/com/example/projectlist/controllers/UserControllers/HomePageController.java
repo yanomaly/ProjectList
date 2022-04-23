@@ -93,6 +93,7 @@ public class HomePageController {
         return "home_page";
     }
 
+    //button 'previous' clicked
     @RequestMapping("/prev")
     @GetMapping
     public String previous(@ModelAttribute("page") Button page, Model model){
@@ -102,6 +103,7 @@ public class HomePageController {
         return "home_page";
     }
 
+    //button 'next' clicked
     @RequestMapping("/next")
     @GetMapping
     public String next(@ModelAttribute("page") Button page, Model model){

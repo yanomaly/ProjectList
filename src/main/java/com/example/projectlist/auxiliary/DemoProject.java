@@ -1,5 +1,6 @@
 package com.example.projectlist.auxiliary;
 
+//used to collect any info about project from html forms
 public class DemoProject {
     private String name;
     private String head;
