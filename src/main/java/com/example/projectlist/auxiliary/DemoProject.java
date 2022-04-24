@@ -7,6 +7,14 @@ public class DemoProject {
     private String dateFinish;
     private String budget;
 
+    public DemoProject() {}
+    public DemoProject(String name, String head, String dateFinish, String budget) {
+        this.name = name;
+        this.head = head;
+        this.dateFinish = dateFinish;
+        this.budget = budget;
+    }
+
     public String getName() {
         return name;
     }

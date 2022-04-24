@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
     }
     public String validation(User user) {
         String decision = "";
-        if (!Pattern.compile(".{6,}").matcher(user.getPassword()).find())
+        if (!Pattern.compile(".{6,}").matcher(user.getPassword()).matches())
             decision += "Weak password!\nIt's length should be at least 6 symbols.\n\n";
         if (userRepository.findByUsername(user.getUsername()) != null)
             decision += "User with this name already exists!\n\n";

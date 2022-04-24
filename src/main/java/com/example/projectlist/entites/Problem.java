@@ -20,6 +20,12 @@ public class Problem {
     @Column(name = "project_id")
     private Long projectID;
 
+    public Problem() {
+    }
+    public Problem(String name) {
+        this.name = name;
+    }
+
     public Long getProblemID() {
         return problemID;
     }

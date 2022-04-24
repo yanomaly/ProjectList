@@ -28,7 +28,7 @@ public class ProblemService {
 
     public String validation(Problem problem){
         String decision = "";
-        if(!Pattern.compile("([A-Z0-9][a-z0-9]+)|([А-Я0-9][а-я0-9]+)").matcher(problem.getName()).find())
+        if(!Pattern.compile("([A-Z0-9 ][a-z0-9 ]+)|([А-Я0-9 ][а-я0-9 ]+)").matcher(problem.getName()).matches())
             decision += "Wrong problem name!\n\n";
         return decision;
     }

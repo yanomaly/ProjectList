@@ -35,18 +35,17 @@ public class ProjectService {
 
     public String validation(DemoProject project){
         String decision = "";
-        if(!Pattern.compile("([A-Z][a-z]+)|([А-Я][а-я]+)").matcher(project.getHead()).find())
+        if(!Pattern.compile("([A-Z][a-z]+)|([А-Я][а-я]+)").matcher(project.getHead()).matches())
             decision += "Wrong surname!\n\n";
-        if(!Pattern.compile("([A-Z0-9][a-z0-9]+)|([А-Я0-9][а-я0-9]+)").matcher(project.getName()).find())
+        if(!Pattern.compile("([A-Z0-9 ][a-z0-9 ]+)|([А-Я0-9 ][а-я0-9 ]+)").matcher(project.getName()).matches())
             decision += "Wrong project name!\n\n";
-        if(!Pattern.compile("[0-9]+").matcher(project.getBudget()).find())
+        if(!Pattern.compile("[0-9]+").matcher(project.getBudget()).matches())
             decision += "Wrong budget!\n\n";
-        if(!Pattern.compile("((0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])|([0-9]))-((0[1-9])|(1[0-2])|([0-9]))-([2-9][0-9]{3})").matcher(project.getDateFinish()).find())
+        if(!Pattern.compile("((0[1-9])|(1[0-9])|(2[0-9])|(3[0-1])|([0-9]))-((0[1-9])|(1[0-2])|([0-9]))-([2-9][0-9]{3})").matcher(project.getDateFinish()).matches())
             decision += "Wrong date!\n\n";
         return  decision;
     }
     public Project createProject(DemoProject demoProject){
-
         Project project = new Project();
         if(demoProject.getName() != null && !demoProject.getName().equals(""))
         project.setName(demoProject.getName());
