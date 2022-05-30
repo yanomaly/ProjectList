@@ -2,15 +2,18 @@
 <html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel = stylesheet type="text/css"  th:href="@{/styles/register_page.css}" />
     <title>Register</title>
 </head>
 <body>
 <form th:action="@{/register}" th:object = "${userForm}" method="post">
-    <label class="Nt">Enter username:</label>
-    <input type="text" name="username" maxlength="20"/>
-    <label class="Pt">Enter password:</label>
-    <input type="password" name="password" maxlength="20"/>
-    <input type="submit" value="Register" />
+    <table>
+        <tr><td><label>Enter username:</label></td></tr>
+        <tr><td><input class = text type="text" name="username" autocomplete="off" maxlength="20"/></td></tr>
+        <tr><td><label>Enter password:</label></td></tr>
+        <tr><td><input class = text type="password" name="password"/></td></tr>
+        <tr><td><input id = submit type="submit" value="Register" autocomplete="off" maxlength="20"/></td></tr>
+    </table>
 </form>
 <div>
     <p th:text="${decision}"/>

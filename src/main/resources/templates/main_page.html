@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel = stylesheet type="text/css"  th:href="@{/styles/main_page.css}" />
     <title>Main page</title>
 </head>
 <body>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
+    <p>Welcome!</p>
+    <a id = login href="/login">Login</a>
+    <a id = register href="/register">Register</a>
 </body>
 </html>

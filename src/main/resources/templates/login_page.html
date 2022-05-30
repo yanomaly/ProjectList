@@ -2,15 +2,18 @@
 <html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel = stylesheet type="text/css"  th:href="@{/styles/login_page.css}" />
     <title>Login</title>
 </head>
 <body>
 <form th:action="@{/login}" method="post">
-    <label>Enter username:</label>
-    <input type="text" name="username"/>
-    <label>Enter password:</label>
-    <input type="password" name="password"/>
-    <input type="submit" value="Login"/>
+    <table>
+        <tr><td><label>Enter username:</label></td></tr>
+        <tr><td><input class = text type="text" name="username" autocomplete="off"/></td></tr>
+        <tr><td><label>Enter password:</label></td></tr>
+        <tr><td><input class = text type="password" name="password"/></td></tr>
+        <tr><td><input id = submit type="submit" value="Login" autocomplete="off"/></td></tr>
+    </table>
 </form>
 </body>
 </html>

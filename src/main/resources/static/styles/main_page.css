@@ -1,0 +1,25 @@
+body{
+    background-color: #ff565b;
+    text-align: center;
+}
+
+p{
+    color: black;
+    font-size: xxx-large;
+}
+
+a{
+    border: solid crimson;
+    border-radius: 10px 10px 10px 10px;
+    background-color: crimson;
+    color: black;
+    font-size: x-large;
+    text-decoration: none;
+    margin: 3% 3% 3% 3%;
+}
+
+a:hover{
+    border: solid black;
+    background-color: black;
+    color: crimson;
+}
