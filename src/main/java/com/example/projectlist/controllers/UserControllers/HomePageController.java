@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Calendar;
-import java.util.List;
-
 @Controller
 @RequestMapping("/home")
 public class HomePageController {
@@ -59,6 +56,7 @@ public class HomePageController {
         userService.setRequest(userID(), projectService.createProject(projectForm));
         userService.setPage(userID(), 0);
         setForms(model);
+        model.addAttribute("decision", projectService.validation(projectForm));
         return "home_page";
     }
 
@@ -67,7 +65,7 @@ public class HomePageController {
     public String deleteProject(@ModelAttribute("delete") Project projectForm, Model model){
         projectsRepository.deleteProject(projectForm.getProjectID());
         problemsRepository.deleteProblem(projectForm.getProjectID());
-        return "redirect:/home/new";
+        return "redirect:/home";
     }
 
     @RequestMapping("/view")

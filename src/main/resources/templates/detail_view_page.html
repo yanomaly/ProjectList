@@ -2,25 +2,28 @@
 <html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel = stylesheet type="text/css"  th:href="@{/styles/detail_view_page.css}" />
     <title>Detail view</title>
 </head>
 <body>
-<table th:object="${project}">
+<div class = "home" th:if="${role == 1}">
+    <a href = "/home"><image src = "/icons/home.png" height = "35px" width = "35px"/></a>
+</div>
+<div class = "home" th:unless="${role == 1}">
+    <a href = "/admin"><image src = "/icons/home.png" height = "35px" width = "35px"/></a>
+</div>
+<table id = project th:object="${project}">
     <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
     <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
     <tr><td th:text="'Date finish: ' + ${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"></td></tr>
     <tr><td th:text="'Budget: ' + ${project.getBudget()}"></td></tr>
 </table>
-<table th:each="problem: ${problems}">
-    <tr><td> Problem: </td></tr>
-    <tr><td th:text="'Name: ' + ${problem.getName()}"></td></tr>
-    <tr><td th:text="'Description: ' + ${problem.getDescription()}"></td></tr>
+<div id = problemsTable>
+<table id = problem th:each="problem: ${problems}" border-spacing>
+    <tr><td> Problem: </td>
+    <td class = problems th:text="'Name: ' + ${problem.getName()}"></td>
+    <td class = problems th:text="'Description: ' + ${problem.getDescription()}"></td></tr>
 </table>
-<div th:if="${role == 1}">
-    <a href = "/home">Home page</a>
-</div>
-<div th:unless="${role == 1}">
-    <a href = "/admin">Main page</a>
 </div>
 </body>
 </html>

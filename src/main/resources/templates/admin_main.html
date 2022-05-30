@@ -2,28 +2,37 @@
 <html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel = stylesheet type="text/css"  th:href="@{/styles/admin_main.css}" />
     <title>Users</title>
 </head>
 <body>
-<form th:action="@{/logout}" href="/" method="post">
-    <input type="submit" value="Logout"/>
+<form th:action="@{/logout}" href="/" method="post" id = logout>
+    <input id = inpB type="image" src="/icons/logout.png" width="35px" height="35px"/>
 </form>
+<div id = users>
 <table th:each="user : ${users}">
-    <tr><td th:text="'Name: ' + ${user.getUsername()}"></td></tr>
-    <tr><td th:text="'ID: ' + ${user.getUserID()}"></td></tr>
-    <tr><td  style="border: 0"><form th:action="@{/admin/projects/redir}" th:object = "${user}" method="get">
+    <tr><td class = user th:text="'Name: ' + ${user.getUsername()}"></td>
+    <td class = user th:text="'ID: ' + ${user.getUserID()}"></td>
+    <td class = user style="border: 0"><form th:action="@{/admin/projects/redir}" th:object = "${user}" method="get">
         <input type="number" name="userID" th:value="${user.getUserID()}" style="display: none" >
-        <input type="submit" value="View projects"/>
+        <input id = view type="image" src="/icons/view.png" width="35px" height="35px"/>
     </form>
+    </td></tr>
 </table>
+</div>
+<table id = controllers>
+    <tr><td>
+        <form th:action="@{/admin/prev}" method="get">
+            <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+            <input class = "submit" type="submit" value="Previous page"/>
+        </form>
+    </td><td>
 <form th:action="@{/admin/next}" method="get">
     <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
-    <input type="submit" value="Next page"/>
+    <input class = "submit" type="submit" value="Next page"/>
 </form>
-
-<form th:action="@{/admin/prev}" method="get">
-    <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
-    <input type="submit" value="Previous page"/>
-</form>
+    </td>
+    </tr>
+</table>
 </body>
 </html>

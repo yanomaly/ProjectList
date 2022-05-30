@@ -2,27 +2,35 @@
 <html lang="en", xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel = stylesheet type="text/css"  th:href="@{/styles/user_projects.css}" />
     <title>Projects</title>
 </head>
 <body>
-<table th:each="project : ${projects}">
-    <tr><td th:text="'Name: ' + ${project.getName()}"></td></tr>
-    <tr><td th:text="'Head: ' + ${project.getHead()}"></td></tr>
-    <tr><td th:text="'Date finish: ' + ${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"></td></tr>
-    <tr><td  style="border: 0"><form th:action="@{/admin/projects/view/redir}" th:object = "${view}" method="get">
-        <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
-        <input type="submit" value="View problems"/>
-    </form>
-</table>
+<a href = "/admin"><image src = "/icons/home.png" height = "35px" width = "35px"/></a>
+<div id = projects>
+    <table th:each="project : ${projects}">
+        <tr><td class = project th:text="'Name: ' + ${project.getName()}"></td>
+            <td class = project th:text="'Head: ' + ${project.getHead()}"></td>
+            <td class = project th:text="'Date finish: ' + ${project.getDateFinish().get(5)} + '-' + ${project.getDateFinish().get(2) + 1} + '-' + ${project.getDateFinish().get(1)}"></td>
+            <td class = project style="border: 0"><form th:action="@{/admin/projects/view/redir}" th:object = "${view}" method="get">
+                <input type="number" name="projectID" th:value="${project.getProjectID()}" style="display: none" >
+                <input id = view type="image" src="/icons/view.png" width="35px" height="35px"/>
+            </form></td>
+            </form></td></tr>
+    </table>
+</div>
+<table id = controllers>
+    <tr><td>
+        <form th:action="@{/admin/projects/prev}" method="get">
+            <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
+            <input class = "submit" type="submit" value="Previous page"/>
+        </form></td><td>
 <form th:action="@{/admin/projects/next}" method="get">
     <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
-    <input type="submit" value="Next page"/>
+    <input class = "submit" type="submit" value="Next page"/>
 </form>
-
-<form th:action="@{/admin/projects/prev}" method="get">
-    <input type="number" name="id" th:value="${page.getId()}" style="display: none" >
-    <input type="submit" value="Previous page"/>
-</form>
-<a href = "/admin">Main page</a>
+    </td>
+    </tr>
+</table>
 </body>
 </html>

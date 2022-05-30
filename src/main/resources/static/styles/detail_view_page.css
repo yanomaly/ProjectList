@@ -1,0 +1,42 @@
+body{
+    background-color: #ff565b;
+    text-align: center;
+}
+
+#problem{
+    margin: 2%;
+    width: 29%;
+}
+
+td{
+    font-size: xx-large;
+}
+
+a{
+    position: absolute;
+    right: 3%;
+}
+
+#project{
+    position: absolute;
+    left: 42%;
+    top: 5%
+}
+
+#problemsTable{
+    position: absolute;
+    top: 25%;
+    left: 30%;
+}
+
+td{
+    text-align: center;
+}
+
+#problem{
+    border-spacing: 11px 11px;
+    table-layout: fixed;
+}
+
+
+

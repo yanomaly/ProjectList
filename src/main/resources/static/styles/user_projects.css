@@ -19,14 +19,11 @@ body{
     color: crimson;
 }
 
-input{
-    outline:none;
+input {
+    outline: none;
     font-size: medium;
     background-color: #ff565b;
-    border-bottom: solid black;
-    border-top: none;
-    border-right: none;
-    border-left: none;
+    border: none;
 }
 
 input:-webkit-autofill {
@@ -35,38 +32,9 @@ input:-webkit-autofill {
     color: black !important;
 }
 
-label{
-    color: black;
-    font-size: medium;
-}
-
-#logout{
+a{
     position: absolute;
-    left: 1%;
-}
-
-#inpB{
-    border: none;
-}
-
-#view {
-    border: none;
-}
-
-#edit{
-    border: none;
-}
-
-#delete{
-    border: none;
-}
-
-p{
-    font-size: x-large;
-}
-
-label{
-    font-size: large;
+    right: 1%;
 }
 
 .project{
@@ -89,24 +57,3 @@ label{
 #controllers.submit{
     margin: 5%;
 }
-
-#sort{
-    position: absolute;
-    top: 74%;
-    left: 28.55%;
-}
-
-#sort1{
-    position: absolute;
-    top: 63%;
-    left: 42%;
-}
-
-#sort2{
-    position: absolute;
-    top: 63%;
-    left: 42%;
-}
-
-
-
